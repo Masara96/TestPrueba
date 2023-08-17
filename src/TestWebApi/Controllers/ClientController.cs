@@ -66,6 +66,7 @@ namespace TestTrabajo.Controllers
             {
                 var response = await _IServiceClient.Search(name);
                 if (response == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
+
                 this._logger.LogInformation("Success Search Client : " + name);
                 return Json(new { success = true, data = response });
             }
@@ -86,6 +87,7 @@ namespace TestTrabajo.Controllers
                 Client? client = (Client?)await _IServiceClient.Get(id);
                 if (client == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
                 var response = await _IServiceClient.Delete(id);
+
                 this._logger.LogInformation("Success delete Client : " + id);
                 return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response)});
             }
@@ -130,7 +132,7 @@ namespace TestTrabajo.Controllers
                 clientFind.Email = client.Email;
 
                 var response = await _IServiceClient.Update(clientFind);
-                this._logger.LogInformation("Success Insert Client : " + client.id);
+                this._logger.LogInformation("Success Update Client : " + client.id);
                 return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response) });
             }
             catch (Exception ex)
