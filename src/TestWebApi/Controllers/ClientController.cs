@@ -80,7 +80,7 @@ namespace TestTrabajo.Controllers
                 Client? client = (Client?) await _IServiceClient.Get(id);
                 if (client == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST});
                 var response = await _IServiceClient.Delete(id);
-                return Json(new { success = true, data = Ok()});
+                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response) });
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace TestTrabajo.Controllers
             try
             {
                 var response = await _IServiceClient.Insert(client);
-                return Json(new { success = true, data = Ok()});
+                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response)});
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace TestTrabajo.Controllers
             try
             {
                 Client? clientFind = (Client?) await _IServiceClient.Get(client.id);
-                if (clientFind == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
+                if (clientFind == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST});
 
                 clientFind.Nombre = client.Nombre;
                 clientFind.Apellido = client.Apellido;
@@ -120,7 +120,7 @@ namespace TestTrabajo.Controllers
                 clientFind.Email = client.Email;
               
                 var response = await _IServiceClient.Update(clientFind);
-                return Json(new { success = true, data = Ok()});
+                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response)});
             }
             catch (Exception ex)
             {

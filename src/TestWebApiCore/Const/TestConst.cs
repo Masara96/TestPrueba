@@ -10,5 +10,6 @@ namespace TestWebApiCore.Const
     {
         public const string CLIENT_NOT_EXIST = "The client not exist.";
         public const string NOT_NAME = "Enter a name";
+        public static string CANT_SUCCESS_ROW = "Number of affected rows {0}";
     }
 }

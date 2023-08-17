@@ -27,7 +27,7 @@ namespace TestWebApiCore.Service
 
         public async Task<Client?> Get(int id)
         {
-            Client? client = (Client?) await _dbContext.client.FirstOrDefaultAsync(x => x.id == id);
+            Client? client = await _dbContext.client.FirstOrDefaultAsync(x => x.id == id);
             return client;
         }
 
@@ -47,17 +47,15 @@ namespace TestWebApiCore.Service
 
         public async Task<int> Insert(Client client)
         {
-                var r = _dbContext.client.AddAsync(client);
-                var result = await _dbContext.SaveChangesAsync();
-                return result;
+            var isCompleted = await _dbContext.client.AddAsync(client);
+            int result = await _dbContext.SaveChangesAsync();
+            return result;
         }
 
         public async Task<int> Update(Client client)
         {
-          
-
-            var r = _dbContext.client.Update(client);
-            var result = await _dbContext.SaveChangesAsync();
+            var isCompleted = _dbContext.client.Update(client);
+            int result = await _dbContext.SaveChangesAsync();
             return result;
         }
 
