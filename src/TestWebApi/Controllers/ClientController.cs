@@ -29,13 +29,15 @@ namespace TestTrabajo.Controllers
             try
             {
                 var response = await _IServiceClient.GetAll();
+                this._logger.LogInformation("Success get all Clients");
                 return Json(new { success = true, data = response });
             }
             catch (Exception ex)
             {
+                this._logger.LogError("Error : " + ex.Message);
                 return Json(new { success = false, data = ex.Message });
             }
-            
+
         }
 
         [HttpGet]
@@ -45,11 +47,13 @@ namespace TestTrabajo.Controllers
             try
             {
                 var response = await _IServiceClient.Get(id);
-                if (response == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST});
+                if (response == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
+                this._logger.LogInformation("Success get Client");
                 return Json(new { success = true, data = response });
             }
             catch (Exception ex)
             {
+                this._logger.LogError("Error : " + ex.Message);
                 return Json(new { success = false, data = ex.Message });
             }
         }
@@ -61,11 +65,13 @@ namespace TestTrabajo.Controllers
             try
             {
                 var response = await _IServiceClient.Search(name);
-                if(response == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
+                if (response == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
+                this._logger.LogInformation("Success Search Client : " + name);
                 return Json(new { success = true, data = response });
             }
             catch (Exception ex)
             {
+                this._logger.LogError("Error : " + ex.Message);
                 return Json(new { success = false, data = ex.Message });
             }
         }
@@ -77,13 +83,15 @@ namespace TestTrabajo.Controllers
         {
             try
             {
-                Client? client = (Client?) await _IServiceClient.Get(id);
-                if (client == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST});
+                Client? client = (Client?)await _IServiceClient.Get(id);
+                if (client == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
                 var response = await _IServiceClient.Delete(id);
-                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response) });
+                this._logger.LogInformation("Success delete Client : " + id);
+                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response)});
             }
             catch (Exception ex)
             {
+                this._logger.LogError("Error : " + ex.Message);
                 return Json(new { success = false, data = ex.Message });
             }
         }
@@ -95,10 +103,12 @@ namespace TestTrabajo.Controllers
             try
             {
                 var response = await _IServiceClient.Insert(client);
-                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response)});
+                this._logger.LogInformation("Success Insert Client");
+                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response) });
             }
             catch (Exception ex)
             {
+                this._logger.LogError("Error : " + ex.Message);
                 return Json(new { success = false, data = ex.Message });
             }
         }
@@ -109,8 +119,8 @@ namespace TestTrabajo.Controllers
         {
             try
             {
-                Client? clientFind = (Client?) await _IServiceClient.Get(client.id);
-                if (clientFind == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST});
+                Client? clientFind = await _IServiceClient.Get(client.id);
+                if (clientFind == null) return Json(new { success = true, data = TestConst.CLIENT_NOT_EXIST });
 
                 clientFind.Nombre = client.Nombre;
                 clientFind.Apellido = client.Apellido;
@@ -118,12 +128,14 @@ namespace TestTrabajo.Controllers
                 clientFind.domicilio = client.domicilio;
                 clientFind.Celular = client.Celular;
                 clientFind.Email = client.Email;
-              
+
                 var response = await _IServiceClient.Update(clientFind);
-                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response)});
+                this._logger.LogInformation("Success Insert Client : " + client.id);
+                return Json(new { success = true, data = string.Format(TestConst.CANT_SUCCESS_ROW, response) });
             }
             catch (Exception ex)
             {
+                this._logger.LogError("Error : " + ex.Message);
                 return Json(new { success = false, data = ex.Message });
             }
         }

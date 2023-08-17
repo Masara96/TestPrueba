@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace TestWebApiCore.Service
 {
     public class ServiceClient : IServiceClient
     {
+
         private readonly DBTestContext _dbContext;
 
         public ServiceClient(DBTestContext dBTestContext)
@@ -47,20 +49,17 @@ namespace TestWebApiCore.Service
 
         public async Task<int> Insert(Client client)
         {
-            var isCompleted = await _dbContext.client.AddAsync(client);
-            int result = await _dbContext.SaveChangesAsync();
+            var isCompleted = _dbContext.client.AddAsync(client);
+            var result = await _dbContext.SaveChangesAsync();
             return result;
         }
 
         public async Task<int> Update(Client client)
         {
-            var isCompleted = _dbContext.client.Update(client);
-            int result = await _dbContext.SaveChangesAsync();
+            var isComplete = _dbContext.client.Update(client);
+            var result = await _dbContext.SaveChangesAsync();
             return result;
         }
-
-
-
 
     }
 }
